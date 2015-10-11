@@ -93,6 +93,15 @@ router.get('/', function(req, res) {
   });
 });
 
+router.get('/user/:username', function(req, res) {
+  console.log("getting freets for", req.params);
+  freets = [];
+  User.getFreets(req.params.username, function(err, freets) {
+      console.log(err, freets);
+      utils.sendSuccessResponse(res, {err: err, freets: freets });
+  });
+});
+
 /*
   GET /notes/:note
   Request parameters:

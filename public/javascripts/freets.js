@@ -1,7 +1,6 @@
 // Wrapped in an immediately invoked function expression.
 (function() {
   $(document).on('click', '#submit-new-freet', function(evt) {
-    alert("clicked");
       var content = $('#new-freet-input').val();
       console.log(content);
       if (content.trim().length === 0) {
@@ -17,6 +16,23 @@
       }).fail(function(responseObject) {
           var response = $.parseJSON(responseObject.responseText);
           $('.error').text(response.err);
+      });
+  });
+
+  $(document).on('click', '#goto-user', function(evt) {
+      var content = $('#goto-user-input').val();
+      console.log(content);
+      if (content.trim().length === 0) {
+          alert('Input must not be empty');
+          return;
+      }
+      $.get('/freets/user/' + content,function(response) {
+        console.log(response);
+        if (response.content.err) {
+          alert("There is no user by that username");
+        } else  {
+          loadPage("page", {user: content, freets: response.content.freets});
+        }
       });
   });
 

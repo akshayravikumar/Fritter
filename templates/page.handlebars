@@ -1,0 +1,12 @@
+<div id="freets">
+  <a href="#" id="home-link">Back to Home</a>
+  <p>This user {{user}} </p>
+  <h1>This User's Freets</h1>
+
+  {{#each freets}}
+    {{> freet}}
+  {{else}}
+    <p><em>This user has no freets!</em></p>
+  {{/each}}
+
+</div>
