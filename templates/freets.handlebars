@@ -1,0 +1,20 @@
+<div id="freets">
+
+  <p>Welcome, {{currentUser}} (<a href="#" id="logout-link">logout</a>)</p>
+
+  <div>
+    <div class="error"></div>
+    <label for="new-freet-input">What do you have to say?</label>
+    <input type="text" id="new-freet-input" />
+    <button id="submit-new-freet">Add Freet</button>
+  </div>
+
+  <h1>My Freets</h1>
+
+  {{#each freets}}
+    {{> freet}}
+  {{else}}
+    <p><em>This user has no freets!</em></p>
+  {{/each}}
+
+</div>

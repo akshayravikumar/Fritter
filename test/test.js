@@ -4,7 +4,7 @@ var assert = require("assert");
 describe('Array', function() {
   // indexOf is the method under test.
   describe('#indexOf()', function () {
-    
+
     // This is a test, we indicate what we're testing for.
     it('should return -1 when the value is not present', function () {
       assert.equal(-1, [1,2,3].indexOf(5));
@@ -22,7 +22,7 @@ describe('Array', function() {
 
   // map is the method under test.
   describe('#map', function() {
-    
+
     // This is a test.
     it('should map values given a function', function() {
       assert.deepEqual([2, 4, 6], [1, 2, 3].map(function(x) { return 2 * x; }));
