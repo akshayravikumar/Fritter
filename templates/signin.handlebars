@@ -1,5 +1,5 @@
-<div id="signin">
-  <a href="#" id="home-link">Back to Home</a>
+<div id="signin" style = "width: 50%; margin: auto">
+  <a href="#" id="home-link" class="waves-effect waves-light btn orange lighten-2"><i class="material-icons left">chevron left</i> Back to Home</a>
   <h1>Sign in</h1>
   <div class="error">
     {{#if error}}
@@ -7,8 +7,10 @@
     {{/if}}
   </div>
   <form id="signin-form">
-    <div>Username: <input type="text" name="username" required /></div>
-    <div>Password: <input type="password" name="password" required /></div>
-    <input type="submit" />
+    <div class="input-field col s6">
+      <div>Username: <input type="text" name="username" required /></div>
+      <div>Password: <input type="password" name="password" required /></div>
+      <input type="submit" />
+    </div>
   </form>
 </div>

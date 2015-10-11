@@ -137,6 +137,27 @@ console.log("posting to /freets");
   });
 });
 
+/*
+  DELETE /notes/:note
+  Request parameters:
+    - note ID: the unique ID of the note within the logged in user's note collection
+  Response:
+    - success: true if the server succeeded in deleting the user's note
+    - err: on failure, an error message
+*/
+router.delete('/:freet', function(req, res) {
+  User.removeFreet(
+    req.currentUser.username,
+    req.note._id,
+    function(err) {
+      if (err) {
+        utils.sendErrResponse(res, 500, 'An unknown error occurred.');
+      } else {
+        utils.sendSuccessResponse(res);
+      }
+  });
+});
+
 
 
 

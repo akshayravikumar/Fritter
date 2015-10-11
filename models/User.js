@@ -93,6 +93,21 @@ var User = (function User(_store) {
     }
   };
 
+  that.removeFreet = function(username, freetId, callback) {
+   if (userExists(username)) {
+     var freets = getUser(username).freets;
+     if (freets[freetId]) {
+       delete freets[freetId];
+       callback(null);
+     } else {
+       callback({ msg : 'Invalid note.' });
+     }
+   } else {
+     callback({ msg : 'Invalid user.' });
+   }
+ };
+
+
   Object.freeze(that);
   return that;
 

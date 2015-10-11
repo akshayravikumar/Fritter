@@ -36,6 +36,20 @@
       });
   });
 
+  $(document).on('click', '.delete-note', function(evt) {
+      var item = $(this).parent();
+      var id = item.data('note-id');
+      $.ajax({
+          url: '/freets/' + id,
+          type: 'DELETE'
+      }).done(function(response) {
+          item.remove();
+      }).fail(function(responseObject) {
+          var response = $.parseJSON(responseObject.responseText);
+          $('.error').text(response.err);
+      });
+  });
+
 
   $(document).on('click', '.cancel-button', function(evt) {
       var item = $(this).parent();
