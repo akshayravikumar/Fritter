@@ -118,7 +118,6 @@ router.post('/', function(req, res) {
     - success.user: if success.loggedIn, the currently logged in user
 */
 router.get('/current', function(req, res) {
-  console.log("getting /users/current");
   if (req.currentUser) {
     utils.sendSuccessResponse(res, { loggedIn : true, user : req.currentUser.username });
   } else {

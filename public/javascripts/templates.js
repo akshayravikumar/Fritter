@@ -45,9 +45,9 @@ templates['page'] = template({"1":function(container,depth0,helpers,partials,dat
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {};
 
-  return "<div id=\"freets\" class = \"container\">\n\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn orange lighten-2\">\n    <i class=\"fa fa-chevron-left\"></i>\n    Back to Home\n\n  </a>\n  <div class = \"center-align\" style =\"font-size: 20px\">Welcome to @"
+  return "<div id=\"freets\" class = \"container\">\n\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn orange lighten-2\">\n    <i class=\"fa fa-chevron-left\"></i>\n    Back to Home\n  </a>\n\n  <br/> <br/> <br/>\n\n  <div class = \"center-align\" style =\"font-size: 20px\">Welcome to @"
     + container.escapeExpression(((helper = (helper = helpers.user || (depth0 != null ? depth0.user : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"user","hash":{},"data":data}) : helper)))
-    + "'s Fritter! Check out his freets below.</div>\n  <br/> <br/> <br/>\n<table class = \"highlight\">\n"
+    + "'s Fritter Page!</div>\n\n<table class = \"highlight\">\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.freets : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
     + "</table>\n\n</div>\n";
 },"usePartial":true,"useData":true});

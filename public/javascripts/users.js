@@ -1,5 +1,6 @@
 // Wrap in an immediately invoked function expression.
 (function() {
+
   $(document).on('submit', '#signin-form', function(evt) {
       evt.preventDefault();
       $.post(

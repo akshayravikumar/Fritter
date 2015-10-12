@@ -74,12 +74,12 @@ router.post('*', requireContent);
 */
 
 /*
-  GET /notes
+  GET /freets
   No request parameters
   Response:
-    - success: true if the server succeeded in getting the user's notes
-    - content: on success, an object with a single field 'notes', which contains a list of the
-    user's notes
+    - success: true if the server succeeded in getting the user's freets
+    - content: on success, an object with a single field 'freets', which contains a list of the
+    user's freets
     - err: on failure, an error message
 */
 router.get('/', function(req, res) {
@@ -99,12 +99,12 @@ router.get('/user/:username', function(req, res) {
 });
 
 /*
-  GET /notes/:note
+  GET /freets/:freet
   Request parameters:
-    - note: the unique ID of the note within the logged in user's note collection
+    - note: the unique ID of the note within the logged in user's freet collection
   Response:
-    - success: true if the server succeeded in getting the user's notes
-    - content: on success, the note object with ID equal to the note referenced in the URL
+    - success: true if the server succeeded in getting the user's freets
+    - content: on success, the freet object with ID equal to the note referenced in the URL
     - err: on failure, an error message
 */
 router.get('/:freet', function(req, res) {
@@ -112,11 +112,11 @@ router.get('/:freet', function(req, res) {
 });
 
 /*
-  POST /notes
+  POST /freets
   Request body:
-    - content: the content of the note
+    - content: the content of the freet
   Response:
-    - success: true if the server succeeded in recording the user's note
+    - success: true if the server succeeded in recording the user's freet
     - err: on failure, an error message
 */
 router.post('/', function(req, res) {
@@ -133,11 +133,11 @@ router.post('/', function(req, res) {
 });
 
 /*
-  DELETE /notes/:note
+  DELETE /freets/:freet
   Request parameters:
-    - note ID: the unique ID of the note within the logged in user's note collection
+    - freet ID: the unique ID of the freet within the logged in user's freet collection
   Response:
-    - success: true if the server succeeded in deleting the user's note
+    - success: true if the server succeeded in deleting the user's freet
     - err: on failure, an error message
 */
 router.delete('/:freet', function(req, res) {

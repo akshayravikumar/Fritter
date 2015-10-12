@@ -35,9 +35,11 @@ var loadFreetsPage = function() {
 	});
 };
 
+
+// a materialize thing
 $(document).ready(function() {
-	$('input#new-freet-input').characterCounter();
-})
+	$('#new-freet-input').characterCounter();
+});
 
 $(document).ready(function() {
 	$.get('/users/current', function(response) {
