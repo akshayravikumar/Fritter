@@ -1,26 +1,34 @@
-<div id="freets">
+<div id="freets" class = "container">
 
-  <p>Welcome, {{currentUser}} (<a href="#" id="logout-link">logout</a>)</p>
+  <a href="#" id="logout-link" class="waves-effect waves-light btn orange lighten-2">
+    Logout
+  </a>
+
+  <form>
+      <div class="input-field" style = "width: 200px">
+      <label for="goto-user-input">Visit a page</label>
+      <input type="text" id="goto-user-input" />
+    </div>
+      <button id="goto-user" class="waves-effect waves-light btn orange lighten-2">Go to User</button>
+  </form>
+
+  <div class = "center-align" style ="font-size: 30px">Welcome, @{{currentUser}}! </div>
 
   <div>
-    <label for="goto-user-input">Whose page do you wanna see?</label>
-    <input type="text" id="goto-user-input" />
-    <button id="goto-user">Go to User</button>
-  </div>
-
-  <div>
-    <div class="error"></div>
-    <label for="new-freet-input">What do you have to say?</label>
+    <div class="error"><br/></div>
+    <div class="input-field">
+    <label for="new-freet-input" id = "new-freet-input" length = "170">What do you have to say?</label>
     <input type="text" id="new-freet-input" />
-    <button id="submit-new-freet">Add Freet</button>
+  </div>
+    <button id="submit-new-freet" class="waves-effect waves-light btn orange lighten-2">Add Freet</button>
   </div>
 
-  <h1>My Freets</h1>
-
+  <div class="center-align" style = "font-size: 24px">My Freets</div>
+  <table class = "highlight">
   {{#each freets}}
     {{> freet}}
   {{else}}
     <p><em>This user has no freets!</em></p>
   {{/each}}
-
+</table>
 </div>

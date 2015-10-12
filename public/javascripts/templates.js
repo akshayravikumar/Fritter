@@ -3,11 +3,20 @@
 templates['freet'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"note\" data-note-id="
+  return "\n <tr class=\"note\" data-note-id="
     + alias4(((helper = (helper = helpers._id || (depth0 != null ? depth0._id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"_id","hash":{},"data":data}) : helper)))
-    + ">\n  <p>"
+    + ">\n   <td>"
     + alias4(((helper = (helper = helpers.content || (depth0 != null ? depth0.content : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"content","hash":{},"data":data}) : helper)))
-    + "</p>\n  <a href=\"#\" class=\"delete-note\">Delete</a>\n </div>\n";
+    + "</td>\n   <td style = \"width: 100px\">\n     <a href=\"#\" class=\"delete-note waves-effect waves-light btn orange lighten-2\">Delete</a>\n   </td>\n </tr>\n";
+},"useData":true});
+templates['freet_read'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+  return " <tr class=\"note\" data-note-id="
+    + alias4(((helper = (helper = helpers._id || (depth0 != null ? depth0._id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"_id","hash":{},"data":data}) : helper)))
+    + ">\n   <td>"
+    + alias4(((helper = (helper = helpers.content || (depth0 != null ? depth0.content : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"content","hash":{},"data":data}) : helper)))
+    + "</td>\n </tr>\n";
 },"useData":true});
 templates['freets'] = template({"1":function(container,depth0,helpers,partials,data) {
     var stack1;
@@ -18,11 +27,11 @@ templates['freets'] = template({"1":function(container,depth0,helpers,partials,d
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {};
 
-  return "<div id=\"freets\">\n\n  <p>Welcome, "
+  return "<div id=\"freets\" class = \"container\">\n\n  <a href=\"#\" id=\"logout-link\" class=\"waves-effect waves-light btn orange lighten-2\">\n    Logout\n  </a>\n\n  <form>\n      <div class=\"input-field\" style = \"width: 200px\">\n      <label for=\"goto-user-input\">Visit a page</label>\n      <input type=\"text\" id=\"goto-user-input\" />\n    </div>\n      <button id=\"goto-user\" class=\"waves-effect waves-light btn orange lighten-2\">Go to User</button>\n  </form>\n\n  <div class = \"center-align\" style =\"font-size: 30px\">Welcome, "
     + container.escapeExpression(((helper = (helper = helpers.currentUser || (depth0 != null ? depth0.currentUser : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"currentUser","hash":{},"data":data}) : helper)))
-    + " (<a href=\"#\" id=\"logout-link\">logout</a>)</p>\n\n  <div>\n    <label for=\"goto-user-input\">Whose page do you wanna see?</label>\n    <input type=\"text\" id=\"goto-user-input\" />\n    <button id=\"goto-user\">Go to User</button>\n  </div>\n\n  <div>\n    <div class=\"error\"></div>\n    <label for=\"new-freet-input\">What do you have to say?</label>\n    <input type=\"text\" id=\"new-freet-input\" />\n    <button id=\"submit-new-freet\">Add Freet</button>\n  </div>\n\n  <h1>My Freets</h1>\n\n"
+    + "! </div>\n\n  <div>\n    <div class=\"error\"><br/></div>\n    <div class=\"input-field\">\n    <label for=\"new-freet-input\" id = \"new-freet-input\" length = \"170\">What do you have to say?</label>\n    <input type=\"text\" id=\"new-freet-input\" />\n  </div>\n    <button id=\"submit-new-freet\" class=\"waves-effect waves-light btn orange lighten-2\">Add Freet</button>\n  </div>\n\n  <div class=\"center-align\" style = \"font-size: 24px\">My Freets</div>\n  <table class = \"highlight\">\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.freets : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
-    + "\n</div>\n";
+    + "</table>\n</div>\n";
 },"usePartial":true,"useData":true});
 templates['index'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     return "<div id=\"homepage\" class = \"center-align\">\n  <div id = \"main_title\">Fritter</div>\n  <p class = \"center-align\" style = \"font-size: 25px\">You must be signed in to continue.</p>\n  <button id=\"signin-btn\" class=\"waves-effect waves-light btn orange lighten-2\">Sign in</button>\n  <button id=\"register-btn\" class=\"waves-effect waves-light btn orange lighten-2\">Register</button>\n</div>\n";
@@ -30,17 +39,17 @@ templates['index'] = template({"compiler":[7,">= 4.0.0"],"main":function(contain
 templates['page'] = template({"1":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return ((stack1 = container.invokePartial(partials.freet,depth0,{"name":"freet","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
+  return ((stack1 = container.invokePartial(partials.freet_read,depth0,{"name":"freet_read","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
 },"3":function(container,depth0,helpers,partials,data) {
     return "    <p><em>This user has no freets!</em></p>\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {};
 
-  return "<div id=\"freets\">\n\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn orange lighten-2\"><i class=\"material-icons left\">arrow back</i> Back to Home</a>\n  <p>This user "
+  return "<div id=\"freets\" class = \"container\">\n\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn orange lighten-2\">\n    <i class=\"fa fa-chevron-left\"></i>\n    Back to Home\n\n  </a>\n  <div class = \"center-align\" style =\"font-size: 20px\">Welcome to "
     + container.escapeExpression(((helper = (helper = helpers.user || (depth0 != null ? depth0.user : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"user","hash":{},"data":data}) : helper)))
-    + " </p>\n  <h1>This User's Freets</h1>\n\n"
+    + "'s Fritter! Check out his freets below.</div>\n<table class = \"highlight\">\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.freets : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
-    + "\n</div>\n";
+    + "</table>\n\n</div>\n";
 },"usePartial":true,"useData":true});
 templates['register'] = template({"1":function(container,depth0,helpers,partials,data) {
     var helper;
@@ -51,9 +60,9 @@ templates['register'] = template({"1":function(container,depth0,helpers,partials
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<div id=\"register\" style = \"width: 50%; margin: auto\">\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn orange lighten-2\"><i class=\"material-icons left\">arrow back</i> Back to Home</a>\n  <h1>Register</h1>\n  <div class=\"error\">\n"
+  return "<div id=\"register\" style = \"width: 50%; margin: auto\">\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn orange lighten-2\"><i class=\"fa fa-chevron-left\"></i> Back to Home</a>\n  <h1>Register</h1>\n  <div class=\"error\">\n"
     + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.error : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "  </div>\n  <form id=\"register-form\">\n    <div>Username: <input type=\"text\" name=\"username\" required /></div>\n    <div>Password: <input type=\"password\" name=\"password\" required /></div>\n    <div>Confirm Password: <input type=\"password\" name=\"confirm\" required /></div>\n    <input type=\"submit\" />\n  </form>\n</div>\n";
+    + "  </div>\n  <form id=\"register-form\">\n    <div class=\"input-field\">\n      <input type=\"text\" name=\"username\" id = \"usernamefield\" required />\n       <label for=\"usernamefield\">Username</label>\n     </div>\n     <div class=\"input-field\">\n       <input type=\"password\" name=\"password\" id=\"passwordfield\" required />\n        <label for=\"passwordfield\">Password</label>\n      </div>\n      <div class=\"input-field\">\n        <input type=\"password\" name=\"confirm\" id=\"passwordconfirmfield\" required />\n         <label for=\"passwordconfirmfield\">Confirm Password</label>\n       </div>\n       <button class=\"btn waves-effect waves-light\" type=\"submit\">Submit</button>\n  </form>\n</div>\n";
 },"useData":true});
 templates['signin'] = template({"1":function(container,depth0,helpers,partials,data) {
     var helper;
@@ -64,8 +73,8 @@ templates['signin'] = template({"1":function(container,depth0,helpers,partials,d
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<div id=\"signin\" style = \"width: 50%; margin: auto\">\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn orange lighten-2\"><i class=\"material-icons left\">chevron left</i> Back to Home</a>\n  <h1>Sign in</h1>\n  <div class=\"error\">\n"
+  return "<div id=\"signin\" style = \"width: 50%; margin: auto\">\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn orange lighten-2\"><i class=\"fa fa-chevron-left\"></i> Back to Home</a>\n  <h1>Sign in</h1>\n  <div class=\"error\">\n"
     + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.error : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "  </div>\n  <form id=\"signin-form\">\n    <div class=\"input-field col s6\">\n      <div>Username: <input type=\"text\" name=\"username\" required /></div>\n      <div>Password: <input type=\"password\" name=\"password\" required /></div>\n      <input type=\"submit\" />\n    </div>\n  </form>\n</div>\n";
+    + "  </div>\n  <form id=\"signin-form\">\n    <div class=\"input-field col s6\">\n      <div class=\"input-field\">\n        <input type=\"text\" name=\"username\" id = \"usernamefield\" required />\n         <label for=\"usernamefield\">Username</label>\n       </div>\n       <div class=\"input-field\">\n         <input type=\"password\" name=\"password\" id=\"passwordfield\" required />\n          <label for=\"passwordfield\">Password</label>\n        </div>\n     <button class=\"btn waves-effect waves-light\" type=\"submit\">Submit</button>\n    </div>\n  </form>\n</div>\n";
 },"useData":true});
 })();

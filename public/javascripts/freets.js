@@ -31,19 +31,19 @@
         if (response.content.err) {
           alert("There is no user by that username");
         } else  {
-          loadPage("page", {user: content, freets: response.content.freets});
+          loadPage("page", {user: content, freets: response.content.freets, currentUser: false});
         }
       });
   });
 
   $(document).on('click', '.delete-note', function(evt) {
-      var item = $(this).parent();
+      var item = $(this).parent().parent();
       var id = item.data('note-id');
       $.ajax({
           url: '/freets/' + id,
           type: 'DELETE'
       }).done(function(response) {
-          item.remove();
+           item.remove();
       }).fail(function(responseObject) {
           var response = $.parseJSON(responseObject.responseText);
           $('.error').text(response.err);
@@ -71,7 +71,8 @@
       ).done(function(response) {
           item.after(Handlebars.templates['freet']({
               _id: id,
-              content: content
+              content: content,
+              currentUser: true
           }));
           item.prev().remove();
           item.remove();

@@ -83,8 +83,7 @@ router.post('*', requireContent);
     - err: on failure, an error message
 */
 router.get('/', function(req, res) {
-  console.log("getting freets for", req.currentUser);
-  User.getFreets(req.currentUser.username, function(err, freets) {
+   User.getFreets(req.currentUser.username, function(err, freets) {
     if (err) {
       utils.sendErrResponse(res, 500, 'An unknown error occurred.');
     } else {
@@ -94,10 +93,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/user/:username', function(req, res) {
-  console.log("getting freets for", req.params);
-  freets = [];
   User.getFreets(req.params.username, function(err, freets) {
-      console.log(err, freets);
       utils.sendSuccessResponse(res, {err: err, freets: freets });
   });
 });
@@ -148,8 +144,9 @@ console.log("posting to /freets");
 router.delete('/:freet', function(req, res) {
   User.removeFreet(
     req.currentUser.username,
-    req.note._id,
+    req.freet._id,
     function(err) {
+      console.log(err);
       if (err) {
         utils.sendErrResponse(res, 500, 'An unknown error occurred.');
       } else {
@@ -157,8 +154,6 @@ router.delete('/:freet', function(req, res) {
       }
   });
 });
-
-
 
 
 module.exports = router;

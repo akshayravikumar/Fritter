@@ -3,6 +3,7 @@
 // may be inserted somewhere in the DOM using a function
 // call instead of manual insertion of an HTML String.
 Handlebars.registerPartial('freet', Handlebars.templates['freet']);
+Handlebars.registerPartial('freet_read', Handlebars.templates['freet_read']);
 
 // Global variable set when a user is logged in. Note
 // that this is unsafe on its own to determine this: we
@@ -22,18 +23,21 @@ var loadPage = function(template, data) {
 
 var loadHomePage = function() {
 	if (currentUser) {
-		loadNotesPage();
+		loadFreetsPage();
 	} else {
 		loadPage('index');
 	}
 };
 
-var loadNotesPage = function() {
+var loadFreetsPage = function() {
 	$.get('/freets', function(response) {
-		console.log("got freets");
-		loadPage('freets', { freets: response.content.freets, currentUser: currentUser });
+ 		loadPage('freets', { freets: response.content.freets, currentUser: currentUser });
 	});
 };
+
+$(document).ready(function() {
+	$('input#new-freet-input').characterCounter();
+})
 
 $(document).ready(function() {
 	$.get('/users/current', function(response) {

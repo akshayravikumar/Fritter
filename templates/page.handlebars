@@ -1,13 +1,18 @@
-<div id="freets">
+<div id="freets" class = "container">
 
-  <a href="#" id="home-link" class="waves-effect waves-light btn orange lighten-2"><i class="material-icons left">arrow back</i> Back to Home</a>
-  <p>This user {{user}} </p>
-  <h1>This User's Freets</h1>
+  <a href="#" id="home-link" class="waves-effect waves-light btn orange lighten-2">
+    <i class="fa fa-chevron-left"></i>
+    Back to Home
 
+  </a>
+  <div class = "center-align" style ="font-size: 20px">Welcome to @{{user}}'s Fritter! Check out his freets below.</div>
+  <br/>
+<table class = "highlight">
   {{#each freets}}
-    {{> freet}}
+    {{> freet_read}}
   {{else}}
     <p><em>This user has no freets!</em></p>
   {{/each}}
+</table>
 
 </div>

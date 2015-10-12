@@ -94,6 +94,7 @@ var User = (function User(_store) {
   };
 
   that.removeFreet = function(username, freetId, callback) {
+    console.log(username, freetId);
    if (userExists(username)) {
      var freets = getUser(username).freets;
      if (freets[freetId]) {
@@ -107,10 +108,11 @@ var User = (function User(_store) {
    }
  };
 
-
+ that.createNewUser("akshay", "akshay", function(){});
   Object.freeze(that);
   return that;
 
 })(_store);
+
 
 module.exports = User;
