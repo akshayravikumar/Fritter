@@ -1,24 +1,37 @@
 <div id="freets" class = "container">
 
-  <a href="#" id="logout-link" class="waves-effect waves-light btn orange lighten-2">
-    Logout
-  </a>
+  <div class = "row">
 
-  <form>
-      <div class="input-field" style = "width: 200px">
+
+  <div class = "col s4">
+    <a href="#" id="logout-link" class="waves-effect waves-light btn orange lighten-2" style = "margin-bottom: 0px">
+      Logout
+    </a>
+  </div>
+
+<div class = "col s8 right-align">
+  <form class = "right-align">
+      <div class="input-field" style = "width: 200px; display: inline-block;">
       <label for="goto-user-input">Visit a page</label>
       <input type="text" id="goto-user-input" />
     </div>
+    <div class="input-field" style = "display: inline-block;">
       <button id="goto-user" class="waves-effect waves-light btn orange lighten-2">Go to User</button>
+    </div>
   </form>
+</div>
+
+</div>
+
+<div style = "height: 20px"></div>
 
   <div class = "center-align" style ="font-size: 30px">Welcome, @{{currentUser}}! </div>
 
   <div>
     <div class="error"><br/></div>
     <div class="input-field">
-    <label for="new-freet-input" id = "new-freet-input" length = "170">What do you have to say?</label>
-    <input type="text" id="new-freet-input" />
+    <label for="new-freet-input">What do you have to say?</label>
+    <input type="text" id="new-freet-input" length = "170"/>
   </div>
     <button id="submit-new-freet" class="waves-effect waves-light btn orange lighten-2">Add Freet</button>
   </div>
@@ -28,7 +41,7 @@
   {{#each freets}}
     {{> freet}}
   {{else}}
-    <p><em>This user has no freets!</em></p>
+    <p><em>You haven't posted any freets yet!</em></p>
   {{/each}}
 </table>
 </div>

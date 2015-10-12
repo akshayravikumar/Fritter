@@ -59,10 +59,11 @@
 
   $(document).on('click', '.submit-button', function(evt) {
       var item = $(this).parent();
+      console.log(item);
       var id = item.data('note-id');
       var content = item.find('input').val();
       if (content.trim().length === 0) {
-          alert('Input must not be empty');
+          alert('Input can\'t be empty');
           return;
       }
       $.post(

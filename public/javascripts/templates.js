@@ -23,13 +23,13 @@ templates['freets'] = template({"1":function(container,depth0,helpers,partials,d
 
   return ((stack1 = container.invokePartial(partials.freet,depth0,{"name":"freet","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
 },"3":function(container,depth0,helpers,partials,data) {
-    return "    <p><em>This user has no freets!</em></p>\n";
+    return "    <p><em>You haven't posted any freets yet!</em></p>\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {};
 
-  return "<div id=\"freets\" class = \"container\">\n\n  <a href=\"#\" id=\"logout-link\" class=\"waves-effect waves-light btn orange lighten-2\">\n    Logout\n  </a>\n\n  <form>\n      <div class=\"input-field\" style = \"width: 200px\">\n      <label for=\"goto-user-input\">Visit a page</label>\n      <input type=\"text\" id=\"goto-user-input\" />\n    </div>\n      <button id=\"goto-user\" class=\"waves-effect waves-light btn orange lighten-2\">Go to User</button>\n  </form>\n\n  <div class = \"center-align\" style =\"font-size: 30px\">Welcome, "
+  return "<div id=\"freets\" class = \"container\">\n\n  <div class = \"row\">\n\n\n  <div class = \"col s4\">\n    <a href=\"#\" id=\"logout-link\" class=\"waves-effect waves-light btn orange lighten-2\" style = \"margin-bottom: 0px\">\n      Logout\n    </a>\n  </div>\n\n<div class = \"col s8 right-align\">\n  <form class = \"right-align\">\n      <div class=\"input-field\" style = \"width: 200px; display: inline-block;\">\n      <label for=\"goto-user-input\">Visit a page</label>\n      <input type=\"text\" id=\"goto-user-input\" />\n    </div>\n    <div class=\"input-field\" style = \"display: inline-block;\">\n      <button id=\"goto-user\" class=\"waves-effect waves-light btn orange lighten-2\">Go to User</button>\n    </div>\n  </form>\n</div>\n\n</div>\n\n<div style = \"height: 20px\"></div>\n\n  <div class = \"center-align\" style =\"font-size: 30px\">Welcome, @"
     + container.escapeExpression(((helper = (helper = helpers.currentUser || (depth0 != null ? depth0.currentUser : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"currentUser","hash":{},"data":data}) : helper)))
-    + "! </div>\n\n  <div>\n    <div class=\"error\"><br/></div>\n    <div class=\"input-field\">\n    <label for=\"new-freet-input\" id = \"new-freet-input\" length = \"170\">What do you have to say?</label>\n    <input type=\"text\" id=\"new-freet-input\" />\n  </div>\n    <button id=\"submit-new-freet\" class=\"waves-effect waves-light btn orange lighten-2\">Add Freet</button>\n  </div>\n\n  <div class=\"center-align\" style = \"font-size: 24px\">My Freets</div>\n  <table class = \"highlight\">\n"
+    + "! </div>\n\n  <div>\n    <div class=\"error\"><br/></div>\n    <div class=\"input-field\">\n    <label for=\"new-freet-input\">What do you have to say?</label>\n    <input type=\"text\" id=\"new-freet-input\" length = \"170\"/>\n  </div>\n    <button id=\"submit-new-freet\" class=\"waves-effect waves-light btn orange lighten-2\">Add Freet</button>\n  </div>\n\n  <div class=\"center-align\" style = \"font-size: 24px\">My Freets</div>\n  <table class = \"highlight\">\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.freets : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
     + "</table>\n</div>\n";
 },"usePartial":true,"useData":true});
@@ -45,9 +45,9 @@ templates['page'] = template({"1":function(container,depth0,helpers,partials,dat
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {};
 
-  return "<div id=\"freets\" class = \"container\">\n\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn orange lighten-2\">\n    <i class=\"fa fa-chevron-left\"></i>\n    Back to Home\n\n  </a>\n  <div class = \"center-align\" style =\"font-size: 20px\">Welcome to "
+  return "<div id=\"freets\" class = \"container\">\n\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn orange lighten-2\">\n    <i class=\"fa fa-chevron-left\"></i>\n    Back to Home\n\n  </a>\n  <div class = \"center-align\" style =\"font-size: 20px\">Welcome to @"
     + container.escapeExpression(((helper = (helper = helpers.user || (depth0 != null ? depth0.user : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"user","hash":{},"data":data}) : helper)))
-    + "'s Fritter! Check out his freets below.</div>\n<table class = \"highlight\">\n"
+    + "'s Fritter! Check out his freets below.</div>\n  <br/> <br/> <br/>\n<table class = \"highlight\">\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.freets : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
     + "</table>\n\n</div>\n";
 },"usePartial":true,"useData":true});
