@@ -28,7 +28,7 @@ var User = (function User(_store) {
     if (userExists(username)) {
       callback(null, getUser(username));
     } else {
-    callback({ msg : 'Invalid user. '});
+     callback({ msg : 'Invalid user. '});
     }
   }
 
@@ -83,6 +83,13 @@ var User = (function User(_store) {
     if (userExists(username)) {
       var user = getUser(username);
       freet._id = user.freets.length;
+      var currentdate = new Date();
+      freet.dateStr =  (currentdate.getMonth()+1)  + "/"
+                    + currentdate.getDate() + "/"
+                    + currentdate.getFullYear() + " @ "
+                    + currentdate.getHours() + ":"
+                    + currentdate.getMinutes() + ":"
+                    + currentdate.getSeconds();
       user.freets.push(freet);
       callback(null);
     } else {
