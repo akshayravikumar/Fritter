@@ -28,7 +28,7 @@ var User = (function User(_store) {
     if (userExists(username)) {
       callback(null, getUser(username));
     } else {
-      callback({ msg : 'No such user!' });
+    callback({ msg : 'Invalid user. '});
     }
   }
 
@@ -41,7 +41,7 @@ var User = (function User(_store) {
         callback(null, false);
       }
     } else {
-      callback(null, false);
+      callback({ msg : 'Invalid user. '});
     }
   }
 
@@ -71,7 +71,6 @@ var User = (function User(_store) {
   };
 
   that.getFreets = function(username, callback) {
-    console.log("getting freets for this user");
     if (userExists(username)) {
       var user = getUser(username);
       callback(null, user.freets);
@@ -81,20 +80,17 @@ var User = (function User(_store) {
   }
 
   that.addFreet = function(username, freet, callback) {
-    console.log("adding freet", freet, username);
     if (userExists(username)) {
       var user = getUser(username);
       freet._id = user.freets.length;
       user.freets.push(freet);
       callback(null);
-      console.log(_store);
     } else {
       callback({ msg : 'Invalid user.' });
     }
   };
 
   that.removeFreet = function(username, freetId, callback) {
-    console.log(username, freetId);
    if (userExists(username)) {
      var freets = getUser(username).freets;
      if (freets[freetId]) {

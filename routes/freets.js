@@ -47,7 +47,7 @@ var requireContent = function(req, res, next) {
 };
 
 /*
-  Grab a note from the store whenever one is referenced with an ID in the
+  Grab a freet from the store whenever one is referenced with an ID in the
   request path (any routes defined with :note as a paramter).
 */
 router.param('freet', function(req, res, next, freetId) {
@@ -120,7 +120,6 @@ router.get('/:freet', function(req, res) {
     - err: on failure, an error message
 */
 router.post('/', function(req, res) {
-console.log("posting to /freets");
   User.addFreet(req.currentUser.username, {
     content: req.body.content,
     creator: req.currentUser.username
