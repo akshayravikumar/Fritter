@@ -36,10 +36,6 @@ var loadFreetsPage = function() {
 };
 
 
-// a materialize thing
-$(document).ready(function() {
-	$('#new-freet-input').characterCounter();
-});
 
 $(document).ready(function() {
 	$.get('/users/current', function(response) {
