@@ -32,10 +32,8 @@ var loadHomePage = function() {
 };
 
 var loadFreetsPage = function() {
-	
 	$.get('/freets', function(response) {
-		console.log(response.content);
-		freetPage = [];
+ 		freetPage = [];
 		for (var i = 0; i < response.content.freets.length; i++) {
 			var freet = response.content.freets[i];
 			freet.refreet = false;
@@ -45,8 +43,8 @@ var loadFreetsPage = function() {
 		for (var i = 0; i < response.content.refreets.length; i++) {
 			var freet = response.content.refreets[i];
 			freet.refreet = true;
-			console.log(freet.time);
-			freet.time = moment(freet.time).fromNow();
+			freet.orig = currentUser;
+ 			freet.time = moment(freet.time).fromNow();
 			freetPage.push(freet);
 		}
 		function compare(a,b) {

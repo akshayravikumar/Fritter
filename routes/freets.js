@@ -89,7 +89,6 @@ router.post('*', requireContent);
     - err: on failure, an error message
 */
 router.get('/', function(req, res) {
-  console.log("getting /freets");
   User.getFreets(req.currentUser.username, function(err, freets ,refreets) {
     if(err) {utils.sendErrResponse(res, 500, err); return;}
     else {utils.sendSuccessResponse(res, { 'freets': freets, 'refreets' : refreets });}
@@ -102,17 +101,14 @@ router.get('/allfreets', function(req, res) {
           User.getFreets(user.username, function (err, userfreets, userrefreets) {
           var allFreets = [];
           var following = [];
-          console.log(user.username, userfreets, userrefreets);
           allFreets.push({"username": user.username, "freets" :userfreets, "refreets": userrefreets});
           if (user.following.length === 0) {utils.sendSuccessResponse(res, {"allFreets": allFreets}); return;}
           user.following.forEach(function (id, index) {
             User.findById(id, function(err, user2) {
                 if (err)  {utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return;}
                 else {
-                  console.log("following", user2.username);
                   following.push(user2.username);
                   User.getFreets(user2.username, function(err, freets, refreets) {
-                    console.log(user2.username, freets, refreets);
                       if(err) {utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return;}
                       allFreets.push({"username": user2.username, "freets" :freets, "refreets": refreets});
                       if (index === user.following.length - 1) {
@@ -144,13 +140,11 @@ router.get('/user/:username', function(req, res) {
             }
            }
         });
-      } else {
-        utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return;
       }
+      else {utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return; }
       });
-    } else {
-      utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return;
     }
+    else {utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return; }
   });
 });
 
@@ -177,19 +171,16 @@ router.get('/:freet', function(req, res) {
 */
 
 router.delete('/:freet', function(req, res) {
-  console.log("req.freet", req.freet);
-  User.doesUserExist(req.currentUser.username, function(user) {
+   User.doesUserExist(req.currentUser.username, function(user) {
     if (user) {
       if (user.freets.indexOf(req.freet._id) >= 0) {
-        console.log("splicing freet");
-        user.freets.splice(user.freets.indexOf(req.freet._id), 1);
+         user.freets.splice(user.freets.indexOf(req.freet._id), 1);
       } else if (user.refreets.indexOf(req.freet._id) >= 0) {
-        console.log("splicing refreet");
-        user.refreets.splice(user.refreets.indexOf(req.freet._id), 1);
+         user.refreets.splice(user.refreets.indexOf(req.freet._id), 1);
       }
       user.save(function(err) {
         if (err) {utils.sendErrResponse(res, 500, 'An unknown error occurred.');}
-        else {console.log("done deleting"); utils.sendSuccessResponse(res);}
+        else {utils.sendSuccessResponse(res);}
       });
     } else {
        utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return;
@@ -207,13 +198,12 @@ router.post('/refreet/:freet', function(req, res) {
           } else {
             user.addReFreet(freet, function (err) {
               if (err) {utils.sendErrResponse(res, 500, 'An unknown error occurred.');}
-              else {utils.sendSuccessResponse(res); console.log("get rekt");}
+              else {utils.sendSuccessResponse(res);}
             });
           }
         });
-      } else {
-        utils.sendErrResponse(res, 500, 'An unknown error occurred.');
       }
+      else { utils.sendErrResponse(res, 500, 'An unknown error occurred.'); }
     });
 });
 
@@ -233,12 +223,8 @@ router.post('/', function(req, res) {
        utils.sendErrResponse(res, 500, 'An unknown error occurred.');
      } else {
        user.addFreet(newFreet, function(err) {
-         console.log("adding", newFreet);
-         if (err) {
-            utils.sendErrResponse(res, 500, 'An unknown error occurred.');
-         } else {
-           utils.sendSuccessResponse(res);
-         }
+         if (err) {utils.sendErrResponse(res, 500, 'An unknown error occurred.');}
+         else {utils.sendSuccessResponse(res);}
        });
      }
    });

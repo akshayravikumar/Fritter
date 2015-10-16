@@ -36,8 +36,8 @@
           for (var i = 0; i < response.content.refreets.length; i++) {
             var freet = response.content.refreets[i];
             freet.refreet = true;
-            console.log(freet.time);
-            freet.time = moment(freet.time).fromNow();
+            freet.orig = content;
+             freet.time = moment(freet.time).fromNow();
             freetPage.push(freet);
           }
           function compare(a,b) {
@@ -48,8 +48,7 @@
             return 0;
           }
           freetPage.sort(compare);
-          console.log("/freets/users", "response.content", response.content);
-          loadPage("page",
+           loadPage("page",
           {user: content,
             freets: freetPage,
             currentUser: false,
@@ -67,8 +66,7 @@
       ).done(function(response) {
         freetPage = [];
         response.content.allFreets.forEach(function (user, index) {
-          console.log(user, index);
-          for (var i = 0; i < user.freets.length; i++) {
+           for (var i = 0; i < user.freets.length; i++) {
             var freet = user.freets[i];
             freet.refreet = false;
             freet.time = moment(freet.time).fromNow();
@@ -77,8 +75,7 @@
           for (var i = 0; i < user.refreets.length; i++) {
             var freet = user.refreets[i];
             freet.refreet = true;
-            console.log(freet.time);
-            freet.time = moment(freet.time).fromNow();
+             freet.time = moment(freet.time).fromNow();
             freetPage.push(freet);
             freet.orig = user.username;
           }
@@ -91,11 +88,8 @@
           return 0;
         }
         freetPage.sort(compare);
-        console.log(freetPage);
-        console.log(response.content.following);
-        var followingString = "You aren't following anyone!";
-        console.log(response.content);
-        if (response.content.following) {
+         var followingString = "You aren't following anyone!";
+         if (response.content.following) {
           followingString = "You're following " + response.content.following.join(", ") + "!";
         }
         loadPage("newsfeed",{freets: freetPage, "current": currentUser, following: followingString });
@@ -109,10 +103,8 @@
 
   $(document).on('click', '.follow-button', function(evt) {
     var user = $(this).attr("user");
-    console.log(user);
-    $.get('/users/follow/' + user, function(response) {
-      console.log("response from /users/follow", response);
-       if (response.content) {
+     $.get('/users/follow/' + user, function(response) {
+        if (response.content) {
          if (response.content.err) {
            alert("Error.");
          }
@@ -126,8 +118,7 @@
 
     $(document).on('click', '.unfollow-button', function(evt) {
       var user = $(this).attr("user");
-      console.log(user);
-      $.get('/users/unfollow/' + user,function(response) {
+       $.get('/users/unfollow/' + user,function(response) {
         if (response.content) {
           if (response.content.err) {
             alert("Error.");

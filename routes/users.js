@@ -94,7 +94,6 @@ router.post('/logout', function(req, res) {
     - err: on error, an error message
 */
 router.post('/', function(req, res) {
-  console.log("getting user");
   if (isLoggedInOrInvalidBody(req, res)) {
     return;
   }
@@ -105,7 +104,7 @@ router.post('/', function(req, res) {
     } else {
         var newUser = new User({username: req.body.username, password: req.body.password});
           newUser.save(function (err) {
-          if (err) {utils.sendErrResponse(res, 403, 'An error has occurred.'); return;}
+          if (err) {utils.sendErrResponse(res, 500, 'An error has occurred.'); return;}
           utils.sendSuccessResponse(res, newUser.username);
           return;
         });
@@ -116,7 +115,6 @@ router.post('/', function(req, res) {
 
 
 router.get('/follow/:username', function(req, res) {
-    console.log(req.currentUser.username, "to follow", req.params.username);
     User.follow(req.currentUser.username, req.params.username, function(err) {
       if(err) {utils.sendErrResponse(res, 403, err); return;}
       else {utils.sendSuccessResponse(res); return;}
@@ -124,7 +122,6 @@ router.get('/follow/:username', function(req, res) {
   });
 
   router.get('/unfollow/:username', function(req, res) {
-    console.log(req.currentUser.username, "to unfollow", req.params.username);
       User.unfollow(req.currentUser.username, req.params.username, function(err) {
         if(err) {utils.sendErrResponse(res, 403, err); return;}
         else {utils.sendSuccessResponse(res); return;}
