@@ -141,7 +141,7 @@ router.get('/user/:username', function(req, res) {
            }
         });
       }
-      else {utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return; }
+      else {console.log("user does not exist!"); utils.sendErrResponse(res, 500, 'There is no user named ' + req.params.username + "!"); return; }
       });
     }
     else {utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return; }

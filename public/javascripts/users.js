@@ -23,8 +23,9 @@
           return;
       }
       $.get('/freets/user/' + content,function(response) {
-         if (response.content.err) {
-          alert("There is no user by that username");
+        console.log("/freets/user/",content, response);
+         if (response.err) {
+          alert(response.err);
         } else  {
           freetPage = [];
           for (var i = 0; i < response.content.freets.length; i++) {
@@ -55,6 +56,9 @@
             following: response.content.following
           });
         }
+      }).fail(function(responseObject) {
+          var response = $.parseJSON(responseObject.responseText);
+          alert(response.err);
       });
   });
 
