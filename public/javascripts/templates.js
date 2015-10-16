@@ -123,11 +123,11 @@ templates['newsfeed'] = template({"1":function(container,depth0,helpers,partials
 
   return ((stack1 = container.invokePartial(partials.freet_news,depth0,{"name":"freet_news","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
 },"3":function(container,depth0,helpers,partials,data) {
-    return "    <p><em>You have no freets in your newsfeed!</em></p>\n";
+    return "    <p><em>You have no freets in your FritterFeed!</em></p>\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div id=\"freets\" class = \"container\">\n\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn blue darken-3\">\n    <i class=\"fa fa-chevron-left\"></i>\n    Back to Home\n  </a>\n\n  <br/> <br/> <br/>\n\n  <div class = \"center-align\" style =\"font-size: 20px\">Welcome to your FritterFeed, @"
+  return "<div id=\"freets\" class = \"container\">\n\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn blue darken-3\">\n    <i class=\"fa fa-chevron-left\"></i>\n    Back to Home\n  </a>\n\n  <br/> <br/> <br/>\n\n  <div class = \"center-align\" style =\"font-size: 30px\">Welcome to your FritterFeed, @"
     + alias4(((helper = (helper = helpers.current || (depth0 != null ? depth0.current : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current","hash":{},"data":data}) : helper)))
     + "!</div> <br/>\n  <div class = \"center-align\" style =\"font-size: 18px\">"
     + alias4(((helper = (helper = helpers.following || (depth0 != null ? depth0.following : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"following","hash":{},"data":data}) : helper)))
@@ -156,7 +156,7 @@ templates['page'] = template({"1":function(container,depth0,helpers,partials,dat
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {};
 
-  return "<div id=\"freets\" class = \"container\">\n\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn blue darken-3\">\n    <i class=\"fa fa-chevron-left\"></i>\n    Back to Home\n  </a>\n\n  <br/> <br/> <br/>\n\n  <div class = \"center-align\" style =\"font-size: 20px\">Welcome to @"
+  return "<div id=\"freets\" class = \"container\">\n\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn blue darken-3\">\n    <i class=\"fa fa-chevron-left\"></i>\n    Back to Home\n  </a>\n\n  <br/> <br/> <br/>\n\n  <div class = \"center-align\" style =\"font-size: 24px\">Welcome to @"
     + container.escapeExpression(((helper = (helper = helpers.user || (depth0 != null ? depth0.user : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"user","hash":{},"data":data}) : helper)))
     + "'s Fritter Page!</div> <br/> <br/>\n"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.following : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
@@ -173,9 +173,9 @@ templates['register'] = template({"1":function(container,depth0,helpers,partials
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<div id=\"register\" style = \"width: 50%; margin: auto\">\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn blue darken-3\"><i class=\"fa fa-chevron-left\"></i> Back to Home</a>\n  <h1>Register</h1>\n  <div class=\"error\">\n"
+  return "<div id=\"register\" style = \"width: 50%; margin: auto\">\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn blue darken-3\"><i class=\"fa fa-chevron-left\"></i> Back to Home</a>\n  <h1 style = \"font-size: 24px\">Register</h1> <br/>\n  <div class=\"error\">\n"
     + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.error : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "  </div>\n  <form id=\"register-form\">\n    <div class=\"input-field\">\n      <input type=\"text\" name=\"username\" id = \"usernamefield\" required />\n       <label for=\"usernamefield\">Username</label>\n     </div>\n     <div class=\"input-field\">\n       <input type=\"password\" name=\"password\" id=\"passwordfield\" required />\n        <label for=\"passwordfield\">Password</label>\n      </div>\n      <div class=\"input-field\">\n        <input type=\"password\" name=\"confirm\" id=\"passwordconfirmfield\" required />\n         <label for=\"passwordconfirmfield\">Confirm Password</label>\n       </div>\n       <button class=\"btn waves-effect waves-light\" type=\"submit\">Submit</button>\n  </form>\n</div>\n";
+    + "  </div>\n  <form id=\"register-form\">\n    <div class=\"input-field\">\n      <input type=\"text\" name=\"username\" id = \"usernamefield\" required />\n       <label for=\"usernamefield\">Username</label>\n     </div>\n     <div class=\"input-field\">\n       <input type=\"password\" name=\"password\" id=\"passwordfield\" required />\n        <label for=\"passwordfield\">Password</label>\n      </div>\n      <div class=\"input-field\">\n        <input type=\"password\" name=\"confirm\" id=\"passwordconfirmfield\" required />\n         <label for=\"passwordconfirmfield\">Confirm Password</label>\n       </div>\n       <button class=\"btn waves-effect waves-light blue darken-3\" type=\"submit\">Submit</button>\n  </form>\n</div>\n";
 },"useData":true});
 templates['signin'] = template({"1":function(container,depth0,helpers,partials,data) {
     var helper;
@@ -186,7 +186,7 @@ templates['signin'] = template({"1":function(container,depth0,helpers,partials,d
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<div id=\"signin\" style = \"width: 50%; margin: auto\">\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn blue darken-3\"><i class=\"fa fa-chevron-left\"></i> Back to Home</a>\n  <h1>Sign in</h1>\n  <div class=\"error\">\n"
+  return "<div id=\"signin\" style = \"width: 50%; margin: auto\">\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn blue darken-3\"><i class=\"fa fa-chevron-left\"></i> Back to Home</a>\n  <h1 style = \"font-size: 24px\">Sign In</h1> <br/>\n  <div class=\"error\">\n"
     + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.error : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "  </div>\n  <form id=\"signin-form\">\n    <div class=\"input-field col s6\">\n      <div class=\"input-field\">\n        <input type=\"text\" name=\"username\" id = \"usernamefield\" required />\n         <label for=\"usernamefield\">Username</label>\n       </div>\n       <div class=\"input-field\">\n         <input type=\"password\" name=\"password\" id=\"passwordfield\" required />\n          <label for=\"passwordfield\">Password</label>\n        </div>\n     <button class=\"btn waves-effect waves-light  blue darken-3\" type=\"submit\">Submit</button>\n    </div>\n  </form>\n</div>\n";
 },"useData":true});
