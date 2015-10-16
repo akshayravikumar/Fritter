@@ -116,7 +116,7 @@ templates['freets'] = template({"1":function(container,depth0,helpers,partials,d
     + "</table>\n</div>\n";
 },"usePartial":true,"useData":true});
 templates['index'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div id=\"homepage\" class = \"center-align\">\n  <div id = \"main_title\" class =\"blue-text text-darken-4\">Fritter</div>\n  <p class = \"center-align\" style = \"font-size: 25px\">Welcome to Fritter! <br/> You must be signed in to continue.</p>\n  <button id=\"signin-btn\" class=\"waves-effect waves-light btn blue darken-3\">Sign in</button>\n  <button id=\"register-btn\" class=\"waves-effect waves-light btn blue darken-3\">Register</button>\n</div>\n";
+    return "<div id=\"homepage\" class = \"center-align\">\n  <div id = \"main_title\" class =\"blue-text text-darken-4\">Fritter</div>\n  <div class = \"center-align\" style = \"font-size: 25px\">Welcome to Fritter! <br/> You must be signed in to continue.</div>\n  <br/> <br/>\n  <button id=\"signin-btn\" class=\"waves-effect waves-light btn blue darken-3\">Sign in</button>\n  <button id=\"register-btn\" class=\"waves-effect waves-light btn blue darken-3\">Register</button>\n</div>\n";
 },"useData":true});
 templates['newsfeed'] = template({"1":function(container,depth0,helpers,partials,data) {
     var stack1;
@@ -173,7 +173,7 @@ templates['register'] = template({"1":function(container,depth0,helpers,partials
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<div id=\"register\" style = \"width: 50%; margin: auto\">\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn blue darken-3\"><i class=\"fa fa-chevron-left\"></i> Back to Home</a>\n  <h1 style = \"font-size: 24px\">Register</h1> <br/>\n  <div class=\"error\">\n"
+  return "<div id=\"register\" style = \"width: 50%; margin: auto\">\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn blue darken-3\"><i class=\"fa fa-chevron-left\"></i> Back to Home</a>\n  <h1 style = \"font-size: 28px\">Register</h1> <br/>\n  <div class=\"error\">\n"
     + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.error : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "  </div>\n  <form id=\"register-form\">\n    <div class=\"input-field\">\n      <input type=\"text\" name=\"username\" id = \"usernamefield\" required />\n       <label for=\"usernamefield\">Username</label>\n     </div>\n     <div class=\"input-field\">\n       <input type=\"password\" name=\"password\" id=\"passwordfield\" required />\n        <label for=\"passwordfield\">Password</label>\n      </div>\n      <div class=\"input-field\">\n        <input type=\"password\" name=\"confirm\" id=\"passwordconfirmfield\" required />\n         <label for=\"passwordconfirmfield\">Confirm Password</label>\n       </div>\n       <button class=\"btn waves-effect waves-light blue darken-3\" type=\"submit\">Submit</button>\n  </form>\n</div>\n";
 },"useData":true});
@@ -186,7 +186,7 @@ templates['signin'] = template({"1":function(container,depth0,helpers,partials,d
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<div id=\"signin\" style = \"width: 50%; margin: auto\">\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn blue darken-3\"><i class=\"fa fa-chevron-left\"></i> Back to Home</a>\n  <h1 style = \"font-size: 24px\">Sign In</h1> <br/>\n  <div class=\"error\">\n"
+  return "<div id=\"signin\" style = \"width: 50%; margin: auto\">\n  <a href=\"#\" id=\"home-link\" class=\"waves-effect waves-light btn blue darken-3\"><i class=\"fa fa-chevron-left\"></i> Back to Home</a>\n  <h1 style = \"font-size: 28px\">Sign In</h1> <br/>\n  <div class=\"error\">\n"
     + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.error : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "  </div>\n  <form id=\"signin-form\">\n    <div class=\"input-field col s6\">\n      <div class=\"input-field\">\n        <input type=\"text\" name=\"username\" id = \"usernamefield\" required />\n         <label for=\"usernamefield\">Username</label>\n       </div>\n       <div class=\"input-field\">\n         <input type=\"password\" name=\"password\" id=\"passwordfield\" required />\n          <label for=\"passwordfield\">Password</label>\n        </div>\n     <button class=\"btn waves-effect waves-light  blue darken-3\" type=\"submit\">Submit</button>\n    </div>\n  </form>\n</div>\n";
 },"useData":true});
