@@ -49,11 +49,15 @@
             return 0;
           }
           freetPage.sort(compare);
+          var isNotCurrent = true;
+          if (content.trim() === currentUser) {
+            isNotCurrent = false;
+          }
            loadPage("page",
-          {user: content,
-            freets: freetPage,
-            currentUser: false,
-            following: response.content.following
+          {"user": content,
+            "freets": freetPage,
+            "notCurrent": isNotCurrent,
+            "following": response.content.following
           });
         }
       }).fail(function(responseObject) {
