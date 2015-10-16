@@ -1,6 +1,29 @@
+
+ {{#if refreet}}
  <tr class="note" data-note-id={{_id}}>
    <td style = "width: 200px">
-     [{{dateStr}}]
+   {{orig}} refreeted  from @{{posterName}}
+   </td>
+   <td style = "width: 200px">
+     [{{time}}]
    </td>
    <td>{{content}}</td>
+   <td style = "width: 100px">
+     <a href="#" class="refreet-button waves-effect waves-light btn blue darken-3" freet-id={{_id}}>Refreet</a>
+   </td>
  </tr>
+
+ {{else}}
+ <tr class="note" data-note-id={{_id}}>
+    <td style = "width: 200px">
+      @{{posterName}}
+    </td>
+    <td style = "width: 200px">
+      [{{time}}]
+    </td>
+    <td>{{content}}</td>
+    <td style = "width: 100px">
+       <a href="#" class="refreet-button waves-effect waves-light btn blue darken-3" freet-id={{_id}}>Refreet</a>
+    </td>
+  </tr>
+ {{/if}}

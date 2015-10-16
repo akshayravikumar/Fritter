@@ -1,121 +1,99 @@
-// Data for each User is stored in memory instead of in
-// a database. This store (and internal code within the User model)
-// could in principle be replaced by a database without needing to
-// modify any code in the controller.
-var _store = { };
+var mongoose = require("mongoose");
+var Freet = require("./Freet");
 
-// Model code for a User object in the note-taking app.
-// Each User object stores a username, password, and collection
-// of notes. Each note has some textual content and is specified
-// by the owner's username as well as an ID. Each ID is unique
-// only within the space of each User, so a (username, noteID)
-// uniquely specifies any note.
-var User = (function User(_store) {
+var userSchema = mongoose.Schema({
+  /* Exercise 1: Declare schema here */
+  username: String,
+  freets: [{type: mongoose.Schema.Types.ObjectId, ref: 'Freet'}],
+  refreets : [{type: mongoose.Schema.Types.ObjectId, ref: 'Freet'}],
+  password: String,
+  following: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
+});
 
-  var that = Object.create(User.prototype);
+// var User = mongoose.model("User", userSchema);
 
-  var userExists = function(username) {
-    return _store[username] !== undefined;
-  }
+userSchema.statics.doesUserExist = function (username, cb) {
+  return this.findOne({'username' : username}, function (err, user) {
+      if (err) {cb(undefined);}
+      else {cb(user);}
+    });
+}
 
-  var getUser = function(username) {
-    if (userExists(username)) {
-      return _store[username];
-    }
-  }
 
-  that.findByUsername = function (username, callback) {
-    if (userExists(username)) {
-      callback(null, getUser(username));
-    } else {
-     callback({ msg : 'Invalid user. '});
-    }
-  }
-
-  that.verifyPassword = function(username, candidatepw, callback) {
-    if (userExists(username)) {
-      var user = getUser(username);
-      if (candidatepw === user.password) {
-        callback(null, true);
+userSchema.statics.unfollow = function (username1, username2, cb) {
+  var User = this;
+  User.doesUserExist(username1, function (user) {
+      if (user) {
+        User.doesUserExist(username2, function(user2) {
+          if (user2) {
+            user.following.splice(user.following.indexOf(user2._id), 1);
+            user.save(function(err) {
+              if (err) {cb(err); return;}
+              else {cb(null);return;}
+            });
+          }
+          else {cb("error"); return;}
+        });
       } else {
-        callback(null, false);
+        cb("error");
       }
-    } else {
-      callback({ msg : 'Invalid user. '});
-    }
-  }
+    });
+}
 
-  that.createNewUser = function (username, password, callback) {
-    if (userExists(username)) {
-      callback({ taken: true });
-    } else {
-      _store[username] = { 'username' : username,
-                 'password' : password,
-                 'freets' : [] };
-      callback(null, getUser(username));
-    }
-  };
-
-  that.getFreet = function(username, freetId, callback) {
-    if (userExists(username)) {
-      var user = getUser(username);
-      if (user.freets[freetId]) {
-        var freet = user.freets[freetId];
-        callback(null, freet);
+userSchema.statics.getFreets = function(username, cb) {
+  var User = this;
+  User.doesUserExist(username, function(user) {
+      if (user) {
+        Freet.find({'_id': { $in: user.freets}}, function(err, freets){
+          if(err) {cb("An unknown error occurred."); return;}
+          else {
+            Freet.find({'_id': { $in: user.refreets}}, function(err, refreets){
+              if(err) {cb("An unknown error occurred."); return;}
+              else {cb(null, freets, refreets);}
+            });
+           }
+        });
       } else {
-        callback({ msg : 'Invalid note. '});
+        cb("An unknown error occurred."); return;
       }
-    } else {
-      callback({ msg : 'Invalid user. '});
-    }
-  };
+    });
+}
 
-  that.getFreets = function(username, callback) {
-    if (userExists(username)) {
-      var user = getUser(username);
-      callback(null, user.freets);
-    } else {
-      callback({ msg : 'Invalid user.' });
-    }
-  }
+userSchema.statics.follow = function (username1, username2, cb) {
+  var User = this;
+  User.doesUserExist(username1, function (user) {
+      if (user) {
+        User.doesUserExist(username2, function(user2) {
+          if (user2) {
+            user.following.push(user2);
+            user.save(function(err) {
+              if (err) {cb(err); return;}
+              else {cb(null);return;}
+            });
+          }
+          else {cb("error"); return;}
+        });
+      } else {
+        cb("error");
+      }
+    });
+}
 
-  that.addFreet = function(username, freet, callback) {
-    if (userExists(username)) {
-      var user = getUser(username);
-      freet._id = user.freets.length;
-      var currentdate = new Date();
-      freet.dateStr =  (currentdate.getMonth()+1)  + "/"
-                    + currentdate.getDate() + "/"
-                    + currentdate.getFullYear() + " @ "
-                    + currentdate.getHours() + ":"
-                    + currentdate.getMinutes() + ":"
-                    + currentdate.getSeconds();
-      user.freets.push(freet);
-      callback(null);
-    } else {
-      callback({ msg : 'Invalid user.' });
-    }
-  };
+userSchema.methods.addFreet = function(freet, cb) {
+  this.freets.push(freet);
+  this.save(cb);
+}
 
-  that.removeFreet = function(username, freetId, callback) {
-   if (userExists(username)) {
-     var freets = getUser(username).freets;
-     if (freets[freetId]) {
-       delete freets[freetId];
-       callback(null);
-     } else {
-       callback({ msg : 'Invalid note.' });
-     }
-   } else {
-     callback({ msg : 'Invalid user.' });
-   }
- };
-
- that.createNewUser("akshay", "akshay", function(){});
-  Object.freeze(that);
-  return that;
-
-})(_store);
+userSchema.methods.addReFreet = function(freet, cb) {
+  this.refreets.push(freet);
+  this.save(cb);
+}
 
 
-module.exports = User;
+
+// When we 'require' this model in another file (e.g. routes),
+// we specify what we are importing form this file via module.exports.
+// Here, we are 'exporting' the mongoose model object created from
+// the specified schema.
+
+module.exports = mongoose.model("User", userSchema);

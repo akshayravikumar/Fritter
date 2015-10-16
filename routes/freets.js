@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var utils = require('../utils/utils');
-
-var User = require('../models/User')
+var moment = require('moment');
+var User = require('../models/User');
+var Freet = require('../models/Freet');
 
 /*
   Require authentication on ALL access to /notes/*
@@ -27,11 +28,12 @@ var requireAuthentication = function(req, res, next) {
   that is brute-forcing urls should not gain any information.
 */
 var requireOwnership = function(req, res, next) {
-  if (!(req.currentUser.username === req.freet.creator)) {
-    utils.sendErrResponse(res, 404, 'Resource not found.');
-  } else {
-    next();
-  }
+  // if (!(req.currentUser.username == req.freetCreator)) {
+    // utils.sendErrResponse(res, 404, 'Resource not found.'); return;
+  // } else {
+  //   next();
+  // }
+  next();
 };
 
 /*
@@ -40,7 +42,7 @@ var requireOwnership = function(req, res, next) {
 */
 var requireContent = function(req, res, next) {
   if (!req.body.content) {
-    utils.sendErrResponse(res, 400, 'Content required in request.');
+    utils.sendErrResponse(res, 400, 'Content required in request.'); return;
   } else {
     next();
   }
@@ -51,14 +53,18 @@ var requireContent = function(req, res, next) {
   request path (any routes defined with :note as a paramter).
 */
 router.param('freet', function(req, res, next, freetId) {
-  User.getFreet(req.currentUser.username, freetId, function(err, freet) {
-    if (freet) {
-      req.freet = freet;
-      next();
-    } else {
-      utils.sendErrResponse(res, 404, 'Resource not found.');
+  User.doesUserExist(req.currentUser.username, function(user) {
+      if (user) {
+        Freet.findById(freetId, function(err, freet){
+          req.freet = freet;
+          req.freetCreator = user.username;
+          next();
+        });
+      } else {
+         utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return;
+      }
     }
-  });
+  );
 });
 
 // Register the middleware handlers above.
@@ -83,18 +89,68 @@ router.post('*', requireContent);
     - err: on failure, an error message
 */
 router.get('/', function(req, res) {
-   User.getFreets(req.currentUser.username, function(err, freets) {
-    if (err) {
-      utils.sendErrResponse(res, 500, 'An unknown error occurred.');
-    } else {
-      utils.sendSuccessResponse(res, { freets: freets });
-    }
+  console.log("getting /freets");
+  User.getFreets(req.currentUser.username, function(err, freets ,refreets) {
+    if(err) {utils.sendErrResponse(res, 500, err); return;}
+    else {utils.sendSuccessResponse(res, { 'freets': freets, 'refreets' : refreets });}
   });
 });
 
+router.get('/allfreets', function(req, res) {
+  User.doesUserExist(req.currentUser.username, function (user) {
+        if (user) {
+          User.getFreets(user.username, function (err, userfreets, userrefreets) {
+          var allFreets = [];
+          var following = [];
+          console.log(user.username, userfreets, userrefreets);
+          allFreets.push({"username": user.username, "freets" :userfreets, "refreets": userrefreets});
+          if (user.following.length === 0) {utils.sendSuccessResponse(res, {"allFreets": allFreets}); return;}
+          user.following.forEach(function (id, index) {
+            User.findById(id, function(err, user2) {
+                if (err)  {utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return;}
+                else {
+                  console.log("following", user2.username);
+                  following.push(user2.username);
+                  User.getFreets(user2.username, function(err, freets, refreets) {
+                    console.log(user2.username, freets, refreets);
+                      if(err) {utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return;}
+                      allFreets.push({"username": user2.username, "freets" :freets, "refreets": refreets});
+                      if (index === user.following.length - 1) {
+                        utils.sendSuccessResponse(res, {"allFreets": allFreets,  "following": following}); return;
+                      }
+                  });
+                }
+            });
+          });
+        });
+      }
+      else {utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return;}
+  });
+});
+
+
 router.get('/user/:username', function(req, res) {
-  User.getFreets(req.params.username, function(err, freets) {
-      utils.sendSuccessResponse(res, {err: err, freets: freets });
+  User.doesUserExist(req.currentUser.username, function(user) {
+      if (user) {
+        User.doesUserExist(req.params.username, function(user2) {
+        if (user2) {
+        User.getFreets(req.params.username, function(err, freets ,refreets) {
+          if(err) {utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return;}
+          else {
+            if (user.following.indexOf(user2._id) >= 0) {
+               utils.sendSuccessResponse(res, { 'freets': freets, 'refreets': refreets, 'following':true}); return;
+            } else {
+               utils.sendSuccessResponse(res, { 'freets': freets, 'refreets': refreets, 'following':false}); return;
+            }
+           }
+        });
+      } else {
+        utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return;
+      }
+      });
+    } else {
+      utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return;
+    }
   });
 });
 
@@ -112,6 +168,56 @@ router.get('/:freet', function(req, res) {
 });
 
 /*
+  DELETE /freets/:freet
+  Request parameters:
+    - freet ID: the unique ID of the freet within the logged in user's freet collection
+  Response:
+    - success: true if the server succeeded in deleting the user's freet
+    - err: on failure, an error message
+*/
+
+router.delete('/:freet', function(req, res) {
+  console.log("req.freet", req.freet);
+  User.doesUserExist(req.currentUser.username, function(user) {
+    if (user) {
+      if (user.freets.indexOf(req.freet._id) >= 0) {
+        console.log("splicing freet");
+        user.freets.splice(user.freets.indexOf(req.freet._id), 1);
+      } else if (user.refreets.indexOf(req.freet._id) >= 0) {
+        console.log("splicing refreet");
+        user.refreets.splice(user.refreets.indexOf(req.freet._id), 1);
+      }
+      user.save(function(err) {
+        if (err) {utils.sendErrResponse(res, 500, 'An unknown error occurred.');}
+        else {console.log("done deleting"); utils.sendSuccessResponse(res);}
+      });
+    } else {
+       utils.sendErrResponse(res, 500, 'An unknown error occurred.'); return;
+    }
+  });
+});
+
+router.post('/refreet/:freet', function(req, res) {
+    User.doesUserExist(req.currentUser.username, function(user) {
+      if (user) {
+        Freet.findById(req.freet._id, function(err, freet) {
+          if (err) {utils.sendErrResponse(res, 500, 'An unknown error occurred.');}
+          if (user.refreets.indexOf(freet._id) >= 0) {
+              utils.sendErrResponse(res, 403, 'You have already refreeted this!');
+          } else {
+            user.addReFreet(freet, function (err) {
+              if (err) {utils.sendErrResponse(res, 500, 'An unknown error occurred.');}
+              else {utils.sendSuccessResponse(res); console.log("get rekt");}
+            });
+          }
+        });
+      } else {
+        utils.sendErrResponse(res, 500, 'An unknown error occurred.');
+      }
+    });
+});
+
+/*
   POST /freets
   Request body:
     - content: the content of the freet
@@ -120,39 +226,23 @@ router.get('/:freet', function(req, res) {
     - err: on failure, an error message
 */
 router.post('/', function(req, res) {
-  User.addFreet(req.currentUser.username, {
-    content: req.body.content,
-    creator: req.currentUser.username
-  }, function(err, freet) {
-     if (err) {
-      utils.sendErrResponse(res, 500, 'An unknown error occurred.');
-    } else {
-      utils.sendSuccessResponse(res);
-    }
-  });
-});
-
-/*
-  DELETE /freets/:freet
-  Request parameters:
-    - freet ID: the unique ID of the freet within the logged in user's freet collection
-  Response:
-    - success: true if the server succeeded in deleting the user's freet
-    - err: on failure, an error message
-*/
-router.delete('/:freet', function(req, res) {
-  User.removeFreet(
-    req.currentUser.username,
-    req.freet._id,
-    function(err) {
-      console.log(err);
+  User.doesUserExist(req.currentUser.username, function(user) {
+    var newFreet = new Freet({posterName: req.currentUser.username, content: req.body.content, creator: req.currentUser.username, type: "posted", freetId : user.freets.length, time: moment()});
+    newFreet.save(function(err) {
       if (err) {
-        utils.sendErrResponse(res, 500, 'An unknown error occurred.');
-      } else {
-        utils.sendSuccessResponse(res);
-      }
+       utils.sendErrResponse(res, 500, 'An unknown error occurred.');
+     } else {
+       user.addFreet(newFreet, function(err) {
+         console.log("adding", newFreet);
+         if (err) {
+            utils.sendErrResponse(res, 500, 'An unknown error occurred.');
+         } else {
+           utils.sendSuccessResponse(res);
+         }
+       });
+     }
+   });
   });
 });
-
 
 module.exports = router;

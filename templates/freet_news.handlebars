@@ -1,0 +1,23 @@
+
+ {{#if refreet}}
+ <tr class="note" data-note-id={{_id}}>
+   <td style = "width: 200px">
+   {{orig}} refreeted  from @{{posterName}}
+   </td>
+   <td style = "width: 200px">
+     [{{time}}]
+   </td>
+   <td>{{content}}</td>
+ </tr>
+
+ {{else}}
+ <tr class="note" data-note-id={{_id}}>
+    <td style = "width: 200px">
+      @{{posterName}}
+    </td>
+    <td style = "width: 200px">
+      [{{time}}]
+    </td>
+    <td>{{content}}</td>
+  </tr>
+ {{/if}}

@@ -4,7 +4,7 @@ var utils = require('../utils/utils');
 
 var User = require('../models/User');
 
-/*
+ /*
   For both login and create user, we want to send an error code if the user
   is logged in, or if the client did not provide a username and password
   This function returns true if an error code was sent; the caller should return
@@ -39,18 +39,23 @@ var isLoggedInOrInvalidBody = function(req, res) {
     - err: on error, an error message
 */
 router.post('/login', function(req, res) {
+
   if (isLoggedInOrInvalidBody(req, res)) {
     return;
   }
-
-  User.verifyPassword(req.body.username, req.body.password, function(err, match) {
-    if (match) {
-      req.session.username = req.body.username;
-      utils.sendSuccessResponse(res, { user : req.body.username });
+  User.doesUserExist(req.body.username, function (user) {
+    if (user) {
+      if (req.body.password === user.password) {
+        req.session.username = req.body.username;
+        utils.sendSuccessResponse(res, { user : req.body.username });
+      } else {
+        utils.sendErrResponse(res, 403, 'Username or password invalid.');
+      }
     } else {
       utils.sendErrResponse(res, 403, 'Username or password invalid.');
     }
   });
+
 });
 
 /*
@@ -94,20 +99,37 @@ router.post('/', function(req, res) {
     return;
   }
 
-  User.createNewUser(req.body.username, req.body.password,
-    function(err, user) {
-      if (err) {
-        if (err.taken) {
-          utils.sendErrResponse(res, 400, 'That username is already taken!');
-        } else {
-          utils.sendErrResponse(res, 500, 'An unknown error has occurred.');
-        }
-      } else {
-        utils.sendSuccessResponse(res, user.username);
-      }
+  User.doesUserExist( req.body.username, function (user) {
+    if (user) {
+        utils.sendErrResponse(res, 403, 'Username already exists!');
+    } else {
+        var newUser = new User({username: req.body.username, password: req.body.password});
+          newUser.save(function (err) {
+          if (err) {utils.sendErrResponse(res, 403, 'An error has occurred.'); return;}
+          utils.sendSuccessResponse(res, newUser.username);
+          return;
+        });
+    }
   });
+
 });
 
+
+router.get('/follow/:username', function(req, res) {
+    console.log(req.currentUser.username, "to follow", req.params.username);
+    User.follow(req.currentUser.username, req.params.username, function(err) {
+      if(err) {utils.sendErrResponse(res, 403, err); return;}
+      else {utils.sendSuccessResponse(res); return;}
+    });
+  });
+
+  router.get('/unfollow/:username', function(req, res) {
+    console.log(req.currentUser.username, "to unfollow", req.params.username);
+      User.unfollow(req.currentUser.username, req.params.username, function(err) {
+        if(err) {utils.sendErrResponse(res, 403, err); return;}
+        else {utils.sendSuccessResponse(res); return;}
+      });
+    });
 /*
   Determine whether there is a current user logged in
 

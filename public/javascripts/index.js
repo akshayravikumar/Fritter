@@ -4,6 +4,8 @@
 // call instead of manual insertion of an HTML String.
 Handlebars.registerPartial('freet', Handlebars.templates['freet']);
 Handlebars.registerPartial('freet_read', Handlebars.templates['freet_read']);
+Handlebars.registerPartial('freet_news', Handlebars.templates['freet_news']);
+
 
 // Global variable set when a user is logged in. Note
 // that this is unsafe on its own to determine this: we
@@ -30,12 +32,35 @@ var loadHomePage = function() {
 };
 
 var loadFreetsPage = function() {
+	
 	$.get('/freets', function(response) {
- 		loadPage('freets', { freets: response.content.freets, currentUser: currentUser });
+		console.log(response.content);
+		freetPage = [];
+		for (var i = 0; i < response.content.freets.length; i++) {
+			var freet = response.content.freets[i];
+			freet.refreet = false;
+			freet.time = moment(freet.time).fromNow();
+			freetPage.push(freet);
+		}
+		for (var i = 0; i < response.content.refreets.length; i++) {
+			var freet = response.content.refreets[i];
+			freet.refreet = true;
+			console.log(freet.time);
+			freet.time = moment(freet.time).fromNow();
+			freetPage.push(freet);
+		}
+		function compare(a,b) {
+		  if (a.time > b.time)
+		    return -1;
+		  if (a.time < b.time)
+		    return 1;
+		  return 0;
+		}
+		freetPage.sort(compare);
+
+ 		loadPage('freets', { "freets": freetPage, "currentUser": currentUser });
 	});
 };
-
-
 
 $(document).ready(function() {
 	$.get('/users/current', function(response) {

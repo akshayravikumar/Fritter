@@ -14,6 +14,131 @@
           $('.error').text(response.err);
       });
   });
+  // click to go look at another user's page
+
+  $(document).on('click', '#goto-user', function(evt) {
+      var content = $('#goto-user-input').val();
+       if (content.trim().length === 0) {
+          alert('Input must not be empty');
+          return;
+      }
+      $.get('/freets/user/' + content,function(response) {
+         if (response.content.err) {
+          alert("There is no user by that username");
+        } else  {
+          freetPage = [];
+          for (var i = 0; i < response.content.freets.length; i++) {
+            var freet = response.content.freets[i];
+            freet.refreet = false;
+            freet.time = moment(freet.time).fromNow();
+            freetPage.push(freet);
+          }
+          for (var i = 0; i < response.content.refreets.length; i++) {
+            var freet = response.content.refreets[i];
+            freet.refreet = true;
+            console.log(freet.time);
+            freet.time = moment(freet.time).fromNow();
+            freetPage.push(freet);
+          }
+          function compare(a,b) {
+            if (a.time > b.time)
+              return -1;
+            if (a.time < b.time)
+              return 1;
+            return 0;
+          }
+          freetPage.sort(compare);
+          console.log("/freets/users", "response.content", response.content);
+          loadPage("page",
+          {user: content,
+            freets: freetPage,
+            currentUser: false,
+            following: response.content.following
+          });
+        }
+      });
+  });
+
+
+  // aylmao
+    $(document).on('click', '.goto-newsfeed', function(evt) {
+      $.get(
+          '/freets/allfreets'
+      ).done(function(response) {
+        freetPage = [];
+        response.content.allFreets.forEach(function (user, index) {
+          console.log(user, index);
+          for (var i = 0; i < user.freets.length; i++) {
+            var freet = user.freets[i];
+            freet.refreet = false;
+            freet.time = moment(freet.time).fromNow();
+            freetPage.push(freet);
+          }
+          for (var i = 0; i < user.refreets.length; i++) {
+            var freet = user.refreets[i];
+            freet.refreet = true;
+            console.log(freet.time);
+            freet.time = moment(freet.time).fromNow();
+            freetPage.push(freet);
+            freet.orig = user.username;
+          }
+        });
+        function compare(a,b) {
+          if (a.time > b.time)
+            return -1;
+          if (a.time < b.time)
+            return 1;
+          return 0;
+        }
+        freetPage.sort(compare);
+        console.log(freetPage);
+        console.log(response.content.following);
+        var followingString = "You aren't following anyone!";
+        console.log(response.content);
+        if (response.content.following) {
+          followingString = "You're following " + response.content.following.join(", ") + "!";
+        }
+        loadPage("newsfeed",{freets: freetPage, "current": currentUser, following: followingString });
+      }).fail(function(responseObject) {
+          var response = $.parseJSON(responseObject.responseText);
+          alert(response.err);
+      });
+    });
+
+  // click to go look at another user's page
+
+  $(document).on('click', '.follow-button', function(evt) {
+    var user = $(this).attr("user");
+    console.log(user);
+    $.get('/users/follow/' + user, function(response) {
+      console.log("response from /users/follow", response);
+       if (response.content) {
+         if (response.content.err) {
+           alert("Error.");
+         }
+      } else  {
+        alert("You have followed " + user);
+        $(".follow-button").text("Unfollow");
+        $(".follow-button").removeClass("follow-button").addClass("unfollow-button");
+      }
+    });
+  });
+
+    $(document).on('click', '.unfollow-button', function(evt) {
+      var user = $(this).attr("user");
+      console.log(user);
+      $.get('/users/unfollow/' + user,function(response) {
+        if (response.content) {
+          if (response.content.err) {
+            alert("Error.");
+          }
+       } else  {
+          alert("You have unfollowed " + user);
+          $(".unfollow-button").text("Follow");
+          $(".unfollow-button").addClass("follow-buttn").removeClass("unfollow-button");
+        }
+      });
+    });
 
   $(document).on('submit', '#register-form', function(evt) {
       evt.preventDefault();

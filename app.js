@@ -7,6 +7,15 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 require('handlebars/runtime');
 
+// DATABASE CONNECTION
+var mongoose = require('mongoose');
+mongoose.connect(process.env.MONGOLAB_URL || 'mongodb://localhost/test');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+    console.log("database connected");
+})
+
 // Import route handlers
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -36,8 +45,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // encrypted cookied).
 app.use(function(req, res, next) {
   if (req.session.username) {
-    User.findByUsername(req.session.username,
-      function(err, user) {
+    User.doesUserExist(req.session.username,
+      function(user) {
         if (user) {
           req.currentUser = user;
         } else {

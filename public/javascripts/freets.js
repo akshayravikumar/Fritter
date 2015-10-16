@@ -20,36 +20,36 @@
       });
   });
 
-  // click to go look at another user's page
-
-  $(document).on('click', '#goto-user', function(evt) {
-      var content = $('#goto-user-input').val();
-       if (content.trim().length === 0) {
-          alert('Input must not be empty');
-          return;
-      }
-      $.get('/freets/user/' + content,function(response) {
-         if (response.content.err) {
-          alert("There is no user by that username");
-        } else  {
-          loadPage("page", {user: content, freets: response.content.freets, currentUser: false});
-        }
-      });
-  });
 
   // deletes a freet for the current user
-
   $(document).on('click', '.delete-note', function(evt) {
       var item = $(this).parent().parent();
       var id = item.data('note-id');
+      console.log(item, id);
       $.ajax({
           url: '/freets/' + id,
           type: 'DELETE'
       }).done(function(response) {
+        console.log("response", response);
            item.remove();
       }).fail(function(responseObject) {
+        console.log("responseObject", responseObject);
           var response = $.parseJSON(responseObject.responseText);
           $('.error').text(response.err);
+      });
+  });
+
+  $(document).on('click', '.refreet-button', function(evt) {
+      var id = $(this).attr("freet-id");
+      $.post(
+          '/freets/refreet/' + id,
+          {content: {"freetId" : id}}
+      ).done(function(response) {
+          alert("You have refreeted this.");
+      }).fail(function(responseObject) {
+          var response = $.parseJSON(responseObject.responseText);
+          // $('.error').text(response.err);
+          alert(response.err);
       });
   });
 

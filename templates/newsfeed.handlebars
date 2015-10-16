@@ -1,0 +1,22 @@
+<div id="freets" class = "container">
+
+  <a href="#" id="home-link" class="waves-effect waves-light btn blue darken-3">
+    <i class="fa fa-chevron-left"></i>
+    Back to Home
+  </a>
+
+  <br/> <br/> <br/>
+
+  <div class = "center-align" style ="font-size: 20px">Welcome to your FritterFeed, @{{current}}!</div> <br/>
+  <div class = "center-align" style ="font-size: 18px">{{following}}</div>
+   <br/> <br/>
+
+<table class = "highlight">
+  {{#each freets}}
+    {{> freet_news}}
+  {{else}}
+    <p><em>You have no freets in your newsfeed!</em></p>
+  {{/each}}
+</table>
+
+</div>
