@@ -18,12 +18,13 @@
 
   $(document).on('click', '#goto-user', function(evt) {
       var content = $('#goto-user-input').val();
+      console.log("aylmao!");
+      console.log(content);
        if (content.trim().length === 0) {
           alert('Input must not be empty');
           return;
       }
       $.get('/freets/user/' + content,function(response) {
-        console.log("/freets/user/",content, response);
          if (response.err) {
           alert(response.err);
         } else  {
@@ -49,16 +50,22 @@
             return 0;
           }
           freetPage.sort(compare);
-          var isNotCurrent = true;
           if (content.trim() === currentUser) {
-            isNotCurrent = false;
+            loadPage("page",
+              {"user": content,
+                "freets": freetPage,
+                "notCurrent": false,
+                "following": response.content.following
+              });
+          } else {
+            loadPage("page",
+              {"user": content,
+                "freets": freetPage,
+                "notCurrent": true,
+                "following": response.content.following
+              });
           }
-           loadPage("page",
-          {"user": content,
-            "freets": freetPage,
-            "notCurrent": isNotCurrent,
-            "following": response.content.following
-          });
+
         }
       }).fail(function(responseObject) {
           var response = $.parseJSON(responseObject.responseText);
