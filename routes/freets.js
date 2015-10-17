@@ -28,11 +28,6 @@ var requireAuthentication = function(req, res, next) {
   that is brute-forcing urls should not gain any information.
 */
 var requireOwnership = function(req, res, next) {
-  // if (!(req.currentUser.username == req.freetCreator)) {
-    // utils.sendErrResponse(res, 404, 'Resource not found.'); return;
-  // } else {
-  //   next();
-  // }
   next();
 };
 
@@ -95,6 +90,13 @@ router.get('/', function(req, res) {
   });
 });
 
+
+/*
+  GET /allfreets
+  No request parameters
+  Response:
+    - on success, a list of all freets/refreets by the user and his/her followers
+*/
 router.get('/allfreets', function(req, res) {
   User.doesUserExist(req.currentUser.username, function (user) {
         if (user) {
