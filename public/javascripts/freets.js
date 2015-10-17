@@ -1,3 +1,46 @@
+//
+//  ++///////::::::::::::::------------::------:::::::
+// +//////:::::::::::-------------------------::--:::
+// //////::::::::---------------....-----....--------
+// ///:::::::::---------------........-......--------
+// /::::::::---------------...-...............--...--
+// /::::::--------...-/yyyyyoshs+/:.`````.....--.....
+// :::::-------...--+ydmmmmmddmmddhs+-.````..........
+// ::::----------/ydmmmmmmmmmmmmddddhs+/-.```........
+// ::-------...:ymmmmdddddmmmmmdmdddddhhyo.```..```..
+// :------..../hNNNmhyyyyyyyhhhhhhhhddddhhs-``.``````
+// :-----....:dNNNmhyssoooooooooooossyhddys:.````````
+// :----....-hmNNmhssoooo++++++o+++ooooymmy+-````````
+// :-----...+dmmddhsooo++++++++++++ooooodNd/.````````
+// ::-----../ddddhysooo++++++//+++++++++ymmo`````````
+// :::------+yhhhhsooooo++++++++++++++++sdh:`````````
+// /::::--/ssshhysssssoo+++++++++++++o++shy-`````````
+// //::::-:sssyssssyhhhyso+++++++++++o++yy+.`````````
+// ///:::::syossssyyyyhddhyso+ooossssso+y+..`..``````
+// //::::::oysssooosyyddsyyysooyhdddhhyoo:..`````````
+// +/:---::/yyyssoooosssosssoosyydhyhsso:...`````````
+// /--.--::/syyyssooo+++oosso+oossooooo/.````````````
+// :..----::ysyyssso++++ooss++oo+++++++-`````````````
+// -..-..-::yyyyysso+++ossso++oo++++++/.`````````````
+// -..-.--:-ohsyysooooosssso/+o+++++++/.`````````````
+// -.-..-:--:hyssssossssssooooo+++++++/-.````````````
+// -----::-..ohyssooossssooooooooooo/:::-````````````
+// -----:-...-yhyssossssssossssss+/:-:-/-````````````
+// -----::---:+yyyysssooosossyss/-::-::/:````````````
+// :----:---:-:-/yhyssssooooshys/-::::/::````````.```
+// :-------------:ydhhyssssooso/::::/:/:.```````..```
+// :---:----------+ddhooo+++////::::/:-.  `````.....`
+// :---:-----:----:hdyo++++////++/-..`  ``````......`
+// :::-:-----::---:sys+++++oo+-.`````````````........
+// :::-------:/-::/+ss++//+os:.`````````````.........
+// /::---:::::/:://+soo+++oso:.....```````...........
+// +/:-::::::://:/+sso++++ooo+-....`````.....--......
+// o/::////////+/++ysoooooooo+-....````...-..---.....
+// o////////+/+oo+sssooooooooo-..........------------
+
+/// in case you dont get it, its that picture of daniel jackson ^^
+
+
 // Wrapped in an immediately invoked function expression.
 (function() {
 
@@ -25,16 +68,13 @@
   $(document).on('click', '.delete-note', function(evt) {
       var item = $(this).parent().parent();
       var id = item.data('note-id');
-      console.log(item, id);
-      $.ajax({
+       $.ajax({
           url: '/freets/' + id,
           type: 'DELETE'
       }).done(function(response) {
-        console.log("response", response);
-           item.remove();
+            item.remove();
       }).fail(function(responseObject) {
-        console.log("responseObject", responseObject);
-          var response = $.parseJSON(responseObject.responseText);
+           var response = $.parseJSON(responseObject.responseText);
           $('.error').text(response.err);
       });
   });
@@ -48,8 +88,7 @@
           alert("You have refreeted this.");
       }).fail(function(responseObject) {
           var response = $.parseJSON(responseObject.responseText);
-          // $('.error').text(response.err);
-          alert(response.err);
+           alert(response.err);
       });
   });
 
