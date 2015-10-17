@@ -70,7 +70,9 @@ var loadHomePage = function() {
 	if (currentUser) {
 		loadFreetsPage();
 	} else {
-		loadPage('index');
+		$.get('/users/allusers', function(response) {
+			loadPage('index', {users: response.content.allUsers});
+		});
 	}
 };
 

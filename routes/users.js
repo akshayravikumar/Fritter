@@ -186,4 +186,13 @@ router.get('/current', function(req, res) {
   }
 });
 
+// route to get all users
+router.get('/allusers', function(req, res) {
+  User.find({}, function (err, users) {
+    if (err) {utils.sendErrResponse(res, 403, err); return;}
+      utils.sendSuccessResponse(res, { allUsers : users.map(function(x) {return x.username;}) });
+   });
+});
+
+
 module.exports = router;
