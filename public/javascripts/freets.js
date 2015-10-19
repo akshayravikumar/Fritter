@@ -72,7 +72,7 @@
           url: '/freets/' + id,
           type: 'DELETE'
       }).done(function(response) {
-            item.remove();
+          item.remove();
       }).fail(function(responseObject) {
            var response = $.parseJSON(responseObject.responseText);
           $('.error').text(response.err);

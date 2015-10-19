@@ -84,7 +84,7 @@
             var freet = response.content.refreets[i];
             freet.refreet = true;
             freet.orig = content;
-             freet.time = moment(freet.time).fromNow();
+            freet.time = moment(freet.time).fromNow();
             freetPage.push(freet);
           }
           function compare(a,b) {
